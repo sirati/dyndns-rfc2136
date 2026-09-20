@@ -1,0 +1,55 @@
+[package]
+name = "dyndns-rfc2136"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+license = "MIT OR Apache-2.0"
+description = "Authenticated DynDNS HTTP updates translated to RFC 2136"
+repository = "https://github.com/sirati/dyndns-rfc2136"
+
+[dependencies]
+base64 = "0.22"
+bytes = "1"
+clap = { version = "4.5", features = ["derive"] }
+dns-update = { version = "0.5.8", default-features = false, features = ["aws-lc-rs"] }
+futures = "0.3"
+http-body-util = "0.1"
+hyper = { version = "1.7", features = ["http1", "server"] }
+hyper-util = { version = "0.1", features = ["server", "tokio"] }
+rustls-acme = { version = "0.15.4", default-features = false, features = ["ring", "tokio", "webpki-roots"] }
+rustls-pemfile = "2"
+serde = { version = "1", features = ["derive"] }
+sha2 = "0.10"
+subtle = "2.6"
+thiserror = "2"
+tokio = { version = "1", features = ["macros", "net", "rt-multi-thread", "sync", "time"] }
+tokio-stream = { version = "0.1", features = ["net"] }
+toml = "0.9"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+url = "2.5"
+webpki-roots = "1"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+all = { level = "deny", priority = -1 }
+pedantic = { level = "deny", priority = -1 }
+nursery = { level = "deny", priority = -1 }
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"
+dbg_macro = "deny"
+multiple_crate_versions = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+module_name_repetitions = "allow"
+
+[profile.release]
+lto = "thin"
+strip = "debuginfo"
+codegen-units = 16
+
+[dev-dependencies]
+tempfile = "3"

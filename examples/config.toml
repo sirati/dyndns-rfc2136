@@ -1,0 +1,19 @@
+listen = "[::]:443"
+acme_domain = "dyndns.example.org"
+acme_contact = "mailto:hostmaster@example.org"
+acme_directory = "production"
+acme_cache_dir = "/var/lib/dyndns-rfc2136/acme"
+dns_server = "192.0.2.53:53"
+ttl = 300
+request_timeout_seconds = 10
+global_requests_per_minute = 120
+per_host_updates_per_minute = 6
+unauthenticated_requests_per_peer_per_minute = 30
+max_connections = 128
+
+[[hosts]]
+hostname = "home.example.org"
+zone = "example.org"
+username = "home-router"
+allow_ipv4 = true
+allow_ipv6 = true
