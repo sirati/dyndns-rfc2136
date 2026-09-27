@@ -6,7 +6,6 @@
       url = "github:NixOS/flake-compat";
       flake = false;
     };
-    self.submodules = true;
   };
 
   outputs = inputs@{ flake-parts, nixpkgs, ... }:
