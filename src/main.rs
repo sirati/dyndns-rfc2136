@@ -31,6 +31,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let dns = Rfc2136Writer::new(config.dns_server, &secrets.tsig, config.ttl)?;
     let app = Arc::new(App::new(&config, auth, dns)?);
     drop(secrets);
-    dyndns_rfc2136::tls::serve(&config, app).await?;
+    let mut terminate = tokio::signal::unix::signal(tokio::signal::unix::SignalKind::terminate())?;
+    tokio::select! {
+        result = dyndns_rfc2136::tls::serve(&config, app) => result?,
+        result = tokio::signal::ctrl_c() => result?,
+        _ = terminate.recv() => {}
+    }
     Ok(())
 }
